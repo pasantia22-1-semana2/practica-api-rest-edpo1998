@@ -13,7 +13,7 @@ export class Server{
     }
 
     initMiddlewares(){
-        this._api.use(express.json);
+        this._api.use(express.json());
         this._api.use(express.urlencoded({extended:true}));
     }
 
@@ -27,9 +27,9 @@ export class Server{
 
     initServer(){
         try{
-            this._api.set('trust proxy',this._hostName);
-            this._api.listen(this._port,()=>{
-                 console.log(`Server of ${this._nameApp} running at http://127.0.0.1:${this._port}`)
+            this._api.set('trust proxy', '127.0.0.1');
+            this._api.listen(4000,()=>{
+                 console.log(`Server of ${this._nameApp} running at http://localhost:${this._port}/api/v1/home`)
              });
         }catch(err){
             console.log("Error start server");
