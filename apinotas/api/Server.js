@@ -1,6 +1,6 @@
 import express from "express"
 
-import noteRoutes from './routes/notes/note.route.js'
+import noteRoutes from './routes/note.route.js'
 
 export class Server{
     constructor(hostName,port,nameApp){
@@ -20,6 +20,7 @@ export class Server{
     initRoutes(){  
         this._api.use("/api/v1/note",noteRoutes)
         this._api.use("/api/v1/home",(req,res)=>{
+            console.log("Ingreso")
             res.json({message: `Welcome to my app`})
         });
        
@@ -27,15 +28,14 @@ export class Server{
 
     initServer(){
         try{
-            this._api.set('trust proxy', '127.0.0.1');
-            this._api.listen(4000,()=>{
-                 console.log(`Server of ${this._nameApp} running at http://localhost:${this._port}/api/v1/home`)
+            this._api.set('trust proxy', this._hostName);
+            this._api.listen(this._port,()=>{
+                 console.log(`Server of ${this._nameApp} running at http://${this._hostName}:${this._port}/api/v1/home`)
              });
         }catch(err){
             console.log("Error start server");
         }
     }
-
 
 }
 
